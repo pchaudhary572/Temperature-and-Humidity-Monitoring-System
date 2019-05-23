@@ -9,7 +9,7 @@
 
 int buzzer = 12; ///arduino pin asign for buzzer
 int ledBlue = 11; ///arduino pin asign for LED
-int temp; //variable to store final reading of temperature
+//int temp; //variable to store final reading of temperature
 int h; //variable to store final reading of humidity
 int  DHTPIN=8 ;// Pin connected to DHT
 
@@ -33,17 +33,17 @@ void loop() {
   
   int t = dht.readTemperature(); //read temperature and store it to t variable
   
-  temp = (t*9/5)+32; //converting degree celsius inti fahrenheit 
+//  temp = (t*9/5)+32; //converting degree celsius inti fahrenheit 
 
     ///condition to alert for high temperature and humidity /////
-  if((temp>=75) && (h>=50)){
-    Serial.println("Temperature and Humidity is high");
-//    Serial.println((String)"Temperature : " + temp + (String)"F");
-//    Serial.println((String)"Humidity : " + h + (String)"%");
+  if((t>=25) || (h>=60)){
+    Serial.println("Temperature Or Humidity is high");
+    Serial.println((String)"Temperature : " + t + (String)"°C");
+    Serial.println((String)"Humidity : " + h + (String)"%");
     
     /////for loop for buzzer alert////   
     for(int i=0; i<3; i++){
-    tone(buzzer,100);
+    tone(buzzer,1000);
     delay(100);
     noTone(buzzer);
     delay(100); 
@@ -53,13 +53,13 @@ void loop() {
     
   }
    ///condition to alert for low temperature and humidity /////
-  else if((temp<=50) && (h<=40)){
-    Serial.println("Temperature and Humidity is Low");
-//    Serial.println((String)"Temperature : " + temp + (String)"F");
-//    Serial.println((String)"Humidity : " + h + (String)"%");
+  else if((t<=20) || (h<=40)){
+    Serial.println("Temperature Or Humidity is Low");
+    Serial.println((String)"Temperature : " + t + (String)"°C");
+    Serial.println((String)"Humidity : " + h + (String)"%");
     
     for(int i=0; i<3; i++){
-    tone(buzzer,500);
+    tone(buzzer,550);
     delay(100);
     noTone(buzzer);
     delay(100);
@@ -71,14 +71,14 @@ void loop() {
    ///condition to alert for normal temperature and humidity /////
   else{
     Serial.println("Temperature and Humidity is Normal");
-//    Serial.println((String)"Temperature : " + temp + (String)"F");
-//    Serial.println((String)"Humidity : " + h + (String)"%");
+    Serial.println((String)"Temperature : " + t + (String)"°C");
+    Serial.println((String)"Humidity : " + h + (String)"%");
     /////for loop for LED blink//// 
     for(int i=0; i<2; i++){
     digitalWrite(ledBlue, HIGH);
-    delay(100);
+    delay(60);
     digitalWrite(ledBlue, LOW);
-    delay(100);
+    delay(60);
   }
     delay (5000);
   }
